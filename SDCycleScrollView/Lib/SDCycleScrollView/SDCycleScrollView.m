@@ -241,12 +241,9 @@ NSString * const ID = @"SDCycleScrollViewCell";
 }
 
 - (void)setPageDotInterval:(NSInteger)pageDotInterval {
-    if (!self.pageControl) return ;
+    _pageDotInterval = pageDotInterval;
 
-    if ([self.pageControl isKindOfClass:[TAPageControl class]]) {
-        TAPageControl *pageControl = (TAPageControl *)_pageControl;
-        pageControl.spacingBetweenDots = pageDotInterval;
-    }
+    [self setCustomPageControlDotsInterval:pageDotInterval];
 }
 
 - (void)setCustomPageControlDotImage:(UIImage *)image isCurrentPageDot:(BOOL)isCurrentPageDot
@@ -260,6 +257,15 @@ NSString * const ID = @"SDCycleScrollViewCell";
         } else {
             pageControl.dotImage = image;
         }
+    }
+}
+
+- (void)setCustomPageControlDotsInterval:(NSInteger)interval {
+    if (!self.pageControl) return ;
+
+    if ([self.pageControl isKindOfClass:[TAPageControl class]]) {
+        TAPageControl *pageControl = (TAPageControl *)_pageControl;
+        pageControl.spacingBetweenDots = interval;
     }
 }
 
@@ -434,6 +440,9 @@ NSString * const ID = @"SDCycleScrollViewCell";
     }
     if (self.pageDotImage) {
         self.pageDotImage = self.pageDotImage;
+    }
+    if (self.pageDotInterval > 0) {
+        [self setCustomPageControlDotsInterval:self.pageDotInterval];
     }
 }
 
