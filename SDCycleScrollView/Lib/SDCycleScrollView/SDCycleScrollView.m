@@ -240,6 +240,15 @@ NSString * const ID = @"SDCycleScrollViewCell";
     [self setCustomPageControlDotImage:pageDotImage isCurrentPageDot:NO];
 }
 
+- (void)setPageDotInterval:(NSInteger)pageDotInterval {
+    if (!self.pageControl) return ;
+
+    if ([self.pageControl isKindOfClass:[TAPageControl class]]) {
+        TAPageControl *pageControl = (TAPageControl *)_pageControl;
+        pageControl.spacingBetweenDots = pageDotInterval;
+    }
+}
+
 - (void)setCustomPageControlDotImage:(UIImage *)image isCurrentPageDot:(BOOL)isCurrentPageDot
 {
     if (!image || !self.pageControl) return;
@@ -513,9 +522,19 @@ NSString * const ID = @"SDCycleScrollViewCell";
     }
     CGFloat x = (self.sd_width - size.width) * 0.5;
     if (self.pageControlAliment == SDCycleScrollViewPageContolAlimentRight) {
-        x = self.mainView.sd_width - size.width - 10;
+        if (self.pageControlEdgeInsets.right > 0) {
+            x = self.mainView.sd_width - size.width - self.pageControlEdgeInsets.right;
+        } else {
+            x = self.mainView.sd_width - size.width - 10;
+        }
     }
-    CGFloat y = self.mainView.sd_height - size.height - 10;
+
+    CGFloat y;
+    if (self.pageControlEdgeInsets.bottom > 0) {
+        y = self.mainView.sd_height - size.height - self.pageControlEdgeInsets.bottom;
+    } else {
+        y = self.mainView.sd_height - size.height - 10;
+    }
     
     if ([self.pageControl isKindOfClass:[TAPageControl class]]) {
         TAPageControl *pageControl = (TAPageControl *)_pageControl;

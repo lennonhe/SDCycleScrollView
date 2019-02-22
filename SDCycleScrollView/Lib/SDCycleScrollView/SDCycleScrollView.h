@@ -181,6 +181,10 @@ typedef enum {
 /** 其他分页控件小圆标图片 */
 @property (nonatomic, strong) UIImage *pageDotImage;
 
+@property (nonatomic, assign) NSInteger pageDotInterval;
+
+@property (nonatomic, assign) UIEdgeInsets pageControlEdgeInsets;
+
 /** 轮播文字label字体颜色 */
 @property (nonatomic, strong) UIColor *titleLabelTextColor;
 
